@@ -1,8 +1,23 @@
 export module Tile {
+  /**
+   * 牌の種類
+   */
   export enum ETileKind {
+    /**
+     * 萬子
+     */
     MANZU = 0b00000000,
+    /**
+     * 筒子
+     */
     PINZU = 0b00010000,
+    /**
+     * 索子
+     */
     SOZU = 0b00100000,
+    /**
+     * 字牌
+     */
     JIHAI = 0b00110000,
   }
   
@@ -20,8 +35,24 @@ export module Tile {
      */
     constructor (bitField: number) {
       this._num = bitField & 0b1111;
-      this._kind = bitField & 0b110000;
+      const kind = bitField & 0b110000;
       this._isRed = (bitField & 0b01000000) !== 0;
+
+      // 牌の種類バリデーション
+      switch (kind) {
+        case ETileKind.MANZU:
+        case ETileKind.PINZU:
+        case ETileKind.SOZU:
+        case ETileKind.JIHAI:
+          break
+        default: throw new TileKindError(this._num, kind, bitField);
+      }
+      this._kind = kind;
+
+      // 範囲のバリデーション
+      if (this._kind !== ETileKind.JIHAI) {
+        if (this._num <= 0 || this._num >= 8) { throw new TileKindError(this._num, kind, bitField); }
+      } else if (this._num <= 0 || this._num >= 10) { throw new TileKindError(this._num, kind, bitField); }
     }
 
     /**
@@ -46,5 +77,29 @@ export module Tile {
     serialize(): number {
       return this._num | (this._kind << 4) || (this.isRed ? 1 : 0) << 6;
     }
+  }
+
+  /**
+   * 牌の種類のバリデーションに失敗された時に投げられる例外
+   */
+  export class TileKindError extends Error {
+    constructor (private _num: number, private _kind: number, private _bitField: number) {
+      super("TileTypeに異常値が渡されました");
+    }
+
+    /**
+     * 牌の数値
+     */
+    get num(): number { return this._num; }
+
+    /**
+     * 牌の種類
+     */
+    get kind(): number { return this._kind; }
+
+    /**
+     * 元のビットフィールド
+     */
+    get bitField(): number { return this._bitField; }
   }
 }
