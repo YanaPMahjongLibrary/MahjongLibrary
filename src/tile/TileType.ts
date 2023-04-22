@@ -1,4 +1,4 @@
-export module Tile {
+export namespace Tile {
   /**
    * 牌の種類
    */
