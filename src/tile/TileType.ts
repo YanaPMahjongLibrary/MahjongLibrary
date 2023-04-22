@@ -35,8 +35,8 @@ export namespace Tile {
      */
     constructor (bitField: number) {
       this._num = bitField & 0b1111;
-      const kind = bitField & 0b110000;
-      this._isRed = (bitField & 0b01000000) !== 0;
+      const kind = (bitField & 0b110000);
+      this._isRed = (bitField & 0b1000000) !== 0;
 
       // 牌の種類バリデーション
       switch (kind) {
@@ -50,7 +50,7 @@ export namespace Tile {
       this._kind = kind;
 
       // 範囲のバリデーション
-      if (this._kind !== ETileKind.JIHAI) {
+      if (this._kind === ETileKind.JIHAI) {
         if (this._num <= 0 || this._num >= 8) { throw new TileKindError(this._num, kind, bitField); }
       } else if (this._num <= 0 || this._num >= 10) { throw new TileKindError(this._num, kind, bitField); }
     }
@@ -75,7 +75,7 @@ export namespace Tile {
      * @returns シリアライズされたビットフィールド
      */
     serialize(): number {
-      return this._num | (this._kind << 4) || (this.isRed ? 1 : 0) << 6;
+      return this._num | this._kind || (this.isRed ? 1 : 0) << 6;
     }
   }
 
