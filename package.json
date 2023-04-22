@@ -1,0 +1,19 @@
+{
+  "name": "mahjong-library",
+  "version": "1.0.0",
+  "description": "Mahjong Game Library",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YanaPMahjongLibrary/MahjongLibrary.git"
+  },
+  "keywords": [
+    "Mahjong"
+  ],
+  "author": "YanaPIIDXer",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.15.13",
+    "typescript": "^5.0.4"
+  }
+}
