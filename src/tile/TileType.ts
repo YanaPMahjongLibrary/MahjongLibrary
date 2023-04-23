@@ -29,13 +29,49 @@ export class TileType {
   private _isRed: boolean;
 
   /**
+   * ビットフィールドへのシリアライズ
+   * @param num 数字
+   * @param kind 種類
+   * @param isRed 赤牌か？
+   */
+  static serializeToBitField(num: number, kind: ETileKind, isRed: boolean): number {
+    return num | kind || (isRed ? 1 : 0) << 6;
+  }
+
+  /**
+   * ビットフィールドから牌の数字に変換
+   * @param bitField ビットフィールド
+   * @returns 牌の数字
+   */
+  static parseNumFromBitfield(bitField: number): number {
+    return bitField & 0b1111;
+  }
+
+  /**
+   * ビットフィールドから牌の種類に変換
+   * @param bitField ビットフィールド
+   * @returns 牌の種類
+   */
+  static parseKindFromBitfield(bitField: number): ETileKind {
+    return bitField & 0b110000;
+  }
+  /**
+   * ビットフィールドから赤牌フラグに変換
+   * @param bitField ビットフィールド
+   * @returns 赤牌フラグ
+   */
+  static parseIsRedFromBitfield(bitField: number): boolean {
+    return (bitField & 0b1000000) !== 0;
+  }
+
+  /**
    * コンストラクタ
    * @param bitField ビットフィールド
    */
   constructor (bitField: number) {
-    this._num = bitField & 0b1111;
-    const kind = (bitField & 0b110000);
-    this._isRed = (bitField & 0b1000000) !== 0;
+    this._num = TileType.parseNumFromBitfield(bitField);
+    const kind = TileType.parseKindFromBitfield(bitField);
+    this._isRed = TileType.parseIsRedFromBitfield(bitField);
 
     // 牌の種類バリデーション
     switch (kind) {
@@ -74,7 +110,7 @@ export class TileType {
    * @returns シリアライズされたビットフィールド
    */
   serialize(): number {
-    return this._num | this._kind || (this.isRed ? 1 : 0) << 6;
+    return TileType.serializeToBitField(this._num, this._kind, this._isRed);
   }
 }
 
