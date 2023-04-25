@@ -47,8 +47,10 @@ export class TileStack {
     return Tile.deserialize(bf);
   }
 
+  /**
+   * 王牌を考慮した残り枚数
+   */
   get count (): number {
-    // 王牌を考慮した残り枚数を返す
     return this.stack.length - 14;
   }
 }
