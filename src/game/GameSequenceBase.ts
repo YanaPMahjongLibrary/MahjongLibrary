@@ -8,7 +8,7 @@ export abstract class GameSequenceBase {
   private players: PlayerBase[];
   private _hash: string;
   private _playerHashes: string[];
-  private boardContext: BoardContext;
+  private _boardContext: BoardContext;
 
   /**
    * コンストラクタ
@@ -20,7 +20,7 @@ export abstract class GameSequenceBase {
     this._hash = "hoge";
     this._playerHashes = new Array(maximumPlayerCount).fill("hogehoge");
 
-    this.boardContext = new BoardContext(this._hash, this._playerHashes);
+    this._boardContext = new BoardContext(this._hash, this._playerHashes);
   }
 
   join(player: PlayerBase) {
@@ -34,6 +34,13 @@ export abstract class GameSequenceBase {
       // プレイヤーが揃ったら開始する
       this.start();
     }
+  }
+
+  /**
+   * 場況コンテキスト
+   */
+  protected get boardContext(): BoardContext {
+    return this._boardContext;
   }
 
   /**
