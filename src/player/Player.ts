@@ -7,10 +7,16 @@ export abstract class PlayerBase {
 
   /**
    * コンストラクタ
-   * @param index プレイヤーインデックス
-   * @param handAccessHash 手牌アクセス用ハッシュ値
    */
-  constructor(handAccessHash: string) {
-    this.handAccessHash = handAccessHash;
+  constructor() {
+    this.handAccessHash = "";
+  }
+
+  /**
+   * 手牌アクセス用ハッシュ値セット
+   * @param newHash 新しいハッシュ値
+   */
+  setHandAccessHash(newHash: string): void {
+    this.handAccessHash = newHash;
   }
 }
