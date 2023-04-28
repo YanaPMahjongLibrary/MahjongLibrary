@@ -1,5 +1,5 @@
 import { ContextAccessHashError } from "@src/errors/ContextAccessHashError";
-import { Tile } from "..";
+import { Tile } from "../tile/Tile";
 import { ETileKind, TileType } from "../tile/TileType";
 
 /**

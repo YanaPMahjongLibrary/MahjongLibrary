@@ -1,4 +1,5 @@
 import { ICustomizableRule } from "./CustomizableRule";
+import { InvalidRuleError } from "../errors/InvalidRuleError";
 
 /**
  * ルールセット
@@ -37,18 +38,5 @@ export class RuleSet {
       throw new InvalidRuleError(name);
     }
     this.rules[name].value = value;
-  }
-}
-
-/**
- * 無効なルールを指定した時に発生するエラー
- */
-export class InvalidRuleError extends Error {
-  /**
-   * コンストラクタ
-   * @param ruleName ルール名
-   */
-  constructor(ruleName: string) {
-    super(`Invalid rule: ${ruleName}`);
   }
 }
