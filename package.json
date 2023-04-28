@@ -4,6 +4,7 @@
   "description": "Mahjong Game Library",
   "scripts": {
     "test": "jest",
+    "build": "tsc",
     "doc": "typedoc"
   },
   "repository": {
