@@ -1,5 +1,6 @@
 import { Tile } from "../tile/Tile";
 import { Meld } from "./Meld";
+import { ContextdAccessHashError } from "../exceptions/ContextAccessHashError";
 
 /**
  * プレイヤーの手を表すクラス
@@ -23,11 +24,11 @@ export class PlayerHand {
    * 手牌を参照するためのオブジェクトを取得
    * @param hash ハッシュ
    * @returns 手牌オブジェクト
-   * @throws HandAccessHashError ハッシュ値が食い違っていたらこの例外がthrowされる
+   * @throws ContextdAccessHashError ハッシュ値が食い違っていたらこの例外がthrowされる
    */
   getHandAccess(hash: string) {
     if (this.hash !== hash) {
-      throw new HandAccessHashError();
+      throw new ContextdAccessHashError();
     }
     return new PlayerHandAccess(this._tiles);
   }
@@ -67,14 +68,5 @@ export class PlayerHandAccess {
    */
   get tiles(): Tile[] {
     return this._tiles.map((t) => t.clone());
-  }
-}
-
-/**
- * 手牌アクセス取得時にハッシュが食い違っていた時のエラー
- */
-export class HandAccessHashError extends Error {
-  constructor() {
-    super("Not allowed get HandAccess object.");
   }
 }
