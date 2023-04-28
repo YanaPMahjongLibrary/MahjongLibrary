@@ -1,6 +1,7 @@
 import { ContextAccessHashError } from "@src/errors/ContextAccessHashError";
 import { Tile } from "../tile/Tile";
-import { ETileKind, TileType } from "../tile/TileType";
+import { TileType } from "../tile/TileType";
+import { Enums } from "../enums";
 
 /**
  * 牌山クラス
@@ -54,15 +55,17 @@ export class TileStackAccess {
     for (let num = 1; num <= 9; num++) {
       this.stack.push(
         ...[
-          TileType.serializeToBitField(num, ETileKind.MANZU, false),
-          TileType.serializeToBitField(num, ETileKind.PINZU, false),
-          TileType.serializeToBitField(num, ETileKind.SOZU, false),
+          TileType.serializeToBitField(num, Enums.ETileKind.MANZU, false),
+          TileType.serializeToBitField(num, Enums.ETileKind.PINZU, false),
+          TileType.serializeToBitField(num, Enums.ETileKind.SOZU, false),
         ]
       );
     }
 
     for (let ji = 1; ji <= 7; ji++) {
-      this.stack.push(TileType.serializeToBitField(ji, ETileKind.JIHAI, false));
+      this.stack.push(
+        TileType.serializeToBitField(ji, Enums.ETileKind.JIHAI, false)
+      );
     }
 
     // 洗牌
