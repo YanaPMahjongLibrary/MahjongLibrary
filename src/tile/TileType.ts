@@ -1,33 +1,12 @@
 import { TileKindError } from "../errors/TileKindError";
-
-/**
- * 牌の種類
- */
-export enum ETileKind {
-  /**
-   * 萬子
-   */
-  MANZU = 0b00000000,
-  /**
-   * 筒子
-   */
-  PINZU = 0b00010000,
-  /**
-   * 索子
-   */
-  SOZU = 0b00100000,
-  /**
-   * 字牌
-   */
-  JIHAI = 0b00110000,
-}
+import { Enums } from "../enums";
 
 /**
  * 牌の種類を表すクラス
  */
 export class TileType {
   private _num: number;
-  private _kind: ETileKind;
+  private _kind: Enums.ETileKind;
   private _isRed: boolean;
 
   /**
@@ -38,7 +17,7 @@ export class TileType {
    */
   static serializeToBitField(
     num: number,
-    kind: ETileKind,
+    kind: Enums.ETileKind,
     isRed: boolean
   ): number {
     return num | kind || (isRed ? 1 : 0) << 6;
@@ -58,7 +37,7 @@ export class TileType {
    * @param bitField ビットフィールド
    * @returns 牌の種類
    */
-  static parseKindFromBitfield(bitField: number): ETileKind {
+  static parseKindFromBitfield(bitField: number): Enums.ETileKind {
     return bitField & 0b110000;
   }
   /**
@@ -81,10 +60,10 @@ export class TileType {
 
     // 牌の種類バリデーション
     switch (kind) {
-      case ETileKind.MANZU:
-      case ETileKind.PINZU:
-      case ETileKind.SOZU:
-      case ETileKind.JIHAI:
+      case Enums.ETileKind.MANZU:
+      case Enums.ETileKind.PINZU:
+      case Enums.ETileKind.SOZU:
+      case Enums.ETileKind.JIHAI:
         break;
       default:
         throw new TileKindError(this._num, kind, bitField);
@@ -92,7 +71,7 @@ export class TileType {
     this._kind = kind;
 
     // 範囲のバリデーション
-    if (this._kind === ETileKind.JIHAI) {
+    if (this._kind === Enums.ETileKind.JIHAI) {
       if (this._num <= 0 || this._num >= 8) {
         throw new TileKindError(this._num, kind, bitField);
       }
@@ -111,7 +90,7 @@ export class TileType {
   /**
    * 牌の種類
    */
-  get kind(): ETileKind {
+  get kind(): Enums.ETileKind {
     return this._kind;
   }
 
