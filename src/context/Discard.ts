@@ -1,3 +1,4 @@
+import { ContextAccessHashError } from "@src/errors/ContextAccessHashError";
 import { Tile } from "../tile/Tile";
 
 /**
@@ -6,7 +7,11 @@ import { Tile } from "../tile/Tile";
 export class Discard {
   private _tiles: Tile[];
 
-  constructor() {
+  /**
+   * コンストラクタ
+   * @param resetHash リセットに必要なハッシュ値
+   */
+  constructor(private resetHash: string) {
     this._tiles = [];
   }
 
@@ -15,5 +20,17 @@ export class Discard {
    */
   get tiles(): Tile[] {
     return this._tiles.map((t) => t.clone());
+  }
+
+  /**
+   * リセット
+   * @param hash リセット用ハッシュ
+   */
+  reset(hash: string): void {
+    if (this.resetHash !== hash) {
+      throw new ContextAccessHashError();
+    }
+
+    this._tiles.splice(0);
   }
 }

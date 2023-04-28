@@ -8,9 +8,9 @@ export class PlayerContext {
   private _hand: PlayerHand;
   private _discard: Discard;
 
-  constructor(hash: string) {
-    this._hand = new PlayerHand(hash);
-    this._discard = new Discard();
+  constructor(playerHash: string, sequenceHash: string) {
+    this._hand = new PlayerHand(playerHash, sequenceHash);
+    this._discard = new Discard(sequenceHash);
   }
 
   /**
@@ -25,5 +25,14 @@ export class PlayerContext {
    */
   get discard(): Discard {
     return this._discard;
+  }
+
+  /**
+   * リセット
+   * @param hash ハッシュ値
+   */
+  reset(hash: string): void {
+    this._hand.reset(hash);
+    this._discard.reset(hash);
   }
 }

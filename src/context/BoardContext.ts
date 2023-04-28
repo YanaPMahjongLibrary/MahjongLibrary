@@ -21,7 +21,7 @@ export class BoardContext {
     //this.reset()
 
     this._playerContexts = new Array(this.playerHashes.length).map(
-      (_, index) => new PlayerContext(this.playerHashes[index])
+      (_, index) => new PlayerContext(this.playerHashes[index], sequenceHash)
     );
     this._stack = new TileStack(this.sequenceHash);
   }
@@ -31,7 +31,8 @@ export class BoardContext {
    */
   reset(): void {
     this._playerContexts = new Array(this.playerHashes.length).map(
-      (_, index) => new PlayerContext(this.playerHashes[index])
+      (_, index) =>
+        new PlayerContext(this.playerHashes[index], this.sequenceHash)
     );
     this._stack = new TileStack(this.sequenceHash);
   }

@@ -15,6 +15,6 @@ export class BasicGameSequence extends GameSequenceBase {
    * ゲーム開始
    */
   start(): void {
-    // TODO: 実装
+    this.startRound();
   }
 }

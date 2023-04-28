@@ -8,16 +8,15 @@ import { ContextAccessHashError } from "../errors/ContextAccessHashError";
 export class PlayerHand {
   private _tiles: Tile[];
   private _melds: Meld[];
-  private hash: string;
 
   /**
    * コンストラクタ
-   * @param hash 手牌制御用のハッシュ値
+   * @param playerHash 手牌制御用のハッシュ値
+   * @param sequenceHash シーケンスのハッシュ値。リセットに使用
    */
-  constructor(hash: string) {
+  constructor(private playerHash: string, private sequenceHash: string) {
     this._tiles = [];
     this._melds = [];
-    this.hash = hash;
   }
 
   /**
@@ -27,16 +26,21 @@ export class PlayerHand {
    * @throws ContextdAccessHashError ハッシュ値が食い違っていたらこの例外がthrowされる
    */
   getAccess(hash: string) {
-    if (this.hash !== hash) {
+    if (this.playerHash !== hash) {
       throw new ContextAccessHashError();
     }
-    return new PlayerHandAccess(this._tiles);
+    return new PlayerHandAccess(this._tiles, this._melds);
   }
 
   /**
    * リセット
+   * @param hash シーケンスの持つハッシュ値
    */
-  reset(): void {
+  reset(hash: string): void {
+    if (this.sequenceHash !== hash) {
+      throw new ContextAccessHashError();
+    }
+
     this._tiles.splice(0);
     this._melds.splice(0);
   }
@@ -54,13 +58,16 @@ export class PlayerHand {
  */
 export class PlayerHandAccess {
   private _tiles: Tile[];
+  private _melds: Meld[];
 
   /**
    * コンストラクタ
    * @param tiles 手牌の配列
+   * @param melds 鳴きの配列
    */
-  constructor(tiles: Tile[]) {
+  constructor(tiles: Tile[], melds: Meld[]) {
     this._tiles = tiles;
+    this._melds = melds;
   }
 
   /**
@@ -68,5 +75,12 @@ export class PlayerHandAccess {
    */
   get tiles(): Tile[] {
     return this._tiles.map((t) => t.clone());
+  }
+
+  /**
+   * 鳴き
+   */
+  get melds(): Meld[] {
+    return this._melds;
   }
 }
