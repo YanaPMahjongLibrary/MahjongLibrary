@@ -11,9 +11,10 @@ export class BoardContext {
 
   /**
    * コンストラクタ
+   * @param sequenceHash シーケンスの持つハッシュ値
    * @param playerHashes 全員分のハッシュ値
    */
-  constructor(playerHashes: string[]) {
+  constructor(private sequenceHash: string, playerHashes: string[]) {
     this.playerHashes = playerHashes;
 
     // 本当はこうしたいけど・・・
@@ -22,7 +23,7 @@ export class BoardContext {
     this._playerContexts = new Array(this.playerHashes.length).map(
       (_, index) => new PlayerContext(this.playerHashes[index])
     );
-    this._stack = new TileStack();
+    this._stack = new TileStack(this.sequenceHash);
   }
 
   /**
@@ -32,7 +33,7 @@ export class BoardContext {
     this._playerContexts = new Array(this.playerHashes.length).map(
       (_, index) => new PlayerContext(this.playerHashes[index])
     );
-    this._stack = new TileStack();
+    this._stack = new TileStack(this.sequenceHash);
   }
 
   /**
