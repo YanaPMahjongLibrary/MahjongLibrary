@@ -1,7 +1,7 @@
 {
-  "entryPoints": ["./src/index.ts"],
+  "entryPoints": ["./src/**/*.ts"],
   "out": "./docs/",
   "includes": "./src/**/*.ts",
-  "exclude": ["**/node_modules/**/*", "./tests/**/*"],
+  "exclude": ["**/node_modules/**/*", "./src/**/index.ts", "./tests/**/*"],
   "excludeExternals": true
 }
