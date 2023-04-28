@@ -3,7 +3,6 @@
  * AIクラス等はこれを継承する
  */
 export abstract class PlayerBase {
-  private _index: number;
   private handAccessHash: string;
 
   /**
@@ -11,15 +10,7 @@ export abstract class PlayerBase {
    * @param index プレイヤーインデックス
    * @param handAccessHash 手牌アクセス用ハッシュ値
    */
-  constructor(index: number, handAccessHash: string) {
-    this._index = index;
+  constructor(handAccessHash: string) {
     this.handAccessHash = handAccessHash;
-  }
-
-  /**
-   * プレイヤーインデックス
-   */
-  get index(): number {
-    return this._index;
   }
 }
