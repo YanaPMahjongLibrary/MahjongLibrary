@@ -34,7 +34,11 @@ export class TileType {
    * @param kind 種類
    * @param isRed 赤牌か？
    */
-  static serializeToBitField(num: number, kind: ETileKind, isRed: boolean): number {
+  static serializeToBitField(
+    num: number,
+    kind: ETileKind,
+    isRed: boolean
+  ): number {
     return num | kind || (isRed ? 1 : 0) << 6;
   }
 
@@ -68,7 +72,7 @@ export class TileType {
    * コンストラクタ
    * @param bitField ビットフィールド
    */
-  constructor (bitField: number) {
+  constructor(bitField: number) {
     this._num = TileType.parseNumFromBitfield(bitField);
     const kind = TileType.parseKindFromBitfield(bitField);
     this._isRed = TileType.parseIsRedFromBitfield(bitField);
@@ -79,31 +83,42 @@ export class TileType {
       case ETileKind.PINZU:
       case ETileKind.SOZU:
       case ETileKind.JIHAI:
-        break
-      default: throw new TileKindError(this._num, kind, bitField);
+        break;
+      default:
+        throw new TileKindError(this._num, kind, bitField);
     }
     this._kind = kind;
 
     // 範囲のバリデーション
     if (this._kind === ETileKind.JIHAI) {
-      if (this._num <= 0 || this._num >= 8) { throw new TileKindError(this._num, kind, bitField); }
-    } else if (this._num <= 0 || this._num >= 10) { throw new TileKindError(this._num, kind, bitField); }
+      if (this._num <= 0 || this._num >= 8) {
+        throw new TileKindError(this._num, kind, bitField);
+      }
+    } else if (this._num <= 0 || this._num >= 10) {
+      throw new TileKindError(this._num, kind, bitField);
+    }
   }
 
   /**
    * 牌の数値
    */
-  get num(): number { return this._num; }
+  get num(): number {
+    return this._num;
+  }
 
   /**
    * 牌の種類
    */
-  get kind(): ETileKind { return this._kind; }
+  get kind(): ETileKind {
+    return this._kind;
+  }
 
   /**
    * 赤牌か
    */
-  get isRed(): boolean { return this._isRed; }
+  get isRed(): boolean {
+    return this._isRed;
+  }
 
   /**
    * シリアライズ
@@ -118,22 +133,32 @@ export class TileType {
  * 牌の種類のバリデーションに失敗された時に投げられる例外
  */
 export class TileKindError extends Error {
-  constructor (private _num: number, private _kind: number, private _bitField: number) {
+  constructor(
+    private _num: number,
+    private _kind: number,
+    private _bitField: number
+  ) {
     super("TileTypeに異常値が渡されました");
   }
 
   /**
    * 牌の数値
    */
-  get num(): number { return this._num; }
+  get num(): number {
+    return this._num;
+  }
 
   /**
    * 牌の種類
    */
-  get kind(): number { return this._kind; }
+  get kind(): number {
+    return this._kind;
+  }
 
   /**
    * 元のビットフィールド
    */
-  get bitField(): number { return this._bitField; }
+  get bitField(): number {
+    return this._bitField;
+  }
 }

@@ -9,16 +9,19 @@ export class Meld {
    * @param _tiles 牌のセット
    * @param _from どこから鳴いたか
    */
-  constructor (private _tiles: Tile[], private _from: number) {
-  }
+  constructor(private _tiles: Tile[], private _from: number) {}
 
   /**
    * 牌のセット
    */
-  get tiles(): Tile[] { return this._tiles.map(t => t.clone() ); }
+  get tiles(): Tile[] {
+    return this._tiles.map((t) => t.clone());
+  }
 
   /**
    * どこから鳴いたか
    */
-  get from(): number { return this._from; }
+  get from(): number {
+    return this._from;
+  }
 }

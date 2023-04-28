@@ -4,7 +4,7 @@ import { TileType, ETileKind } from "./TileType";
  * 牌を表すクラス
  */
 export class Tile {
-  private _type: TileType
+  private _type: TileType;
 
   /**
    * デシリアライズ
@@ -22,7 +22,7 @@ export class Tile {
    * コンストラクタ
    * @param bitField 牌の種類を表すビットフィールド
    */
-  constructor (num: number, kind: ETileKind, isRed: boolean) {
+  constructor(num: number, kind: ETileKind, isRed: boolean) {
     this._type = new TileType(TileType.serializeToBitField(num, kind, isRed));
   }
 
@@ -37,5 +37,7 @@ export class Tile {
   /**
    * 牌の種類
    */
-  get type(): TileType { return this._type; }
+  get type(): TileType {
+    return this._type;
+  }
 }

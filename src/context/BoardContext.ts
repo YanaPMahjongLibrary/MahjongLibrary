@@ -5,14 +5,23 @@ import { TileStack } from "./TileStack";
  * 場況クラス
  */
 export class BoardContext {
-  private _playerContexts: PlayerContext[]
+  private _playerContexts: PlayerContext[];
   private _stack: TileStack;
+  private playerHashes: string[];
 
-  constructor () {
+  /**
+   * コンストラクタ
+   * @param playerHashes 全員分のハッシュ値
+   */
+  constructor(playerHashes: string[]) {
+    this.playerHashes = playerHashes;
+
     // 本当はこうしたいけど・・・
     //this.reset()
-    
-    this._playerContexts = new Array(4).map(_ => new PlayerContext());
+
+    this._playerContexts = new Array(this.playerHashes.length).map(
+      (_, index) => new PlayerContext(this.playerHashes[index])
+    );
     this._stack = new TileStack();
   }
 
@@ -20,17 +29,23 @@ export class BoardContext {
    * リセット
    */
   reset(): void {
-    this._playerContexts = new Array(4).map(_ => new PlayerContext());
+    this._playerContexts = new Array(this.playerHashes.length).map(
+      (_, index) => new PlayerContext(this.playerHashes[index])
+    );
     this._stack = new TileStack();
   }
 
   /**
    * プレイヤーコンテキスト
    */
-  get playerContexts(): PlayerContext[] { return this._playerContexts; }
+  get playerContexts(): PlayerContext[] {
+    return this._playerContexts;
+  }
 
   /**
    * 牌山
    */
-  get stack(): TileStack { return this._stack; }
+  get stack(): TileStack {
+    return this._stack;
+  }
 }

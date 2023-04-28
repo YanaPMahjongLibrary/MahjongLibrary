@@ -8,18 +8,22 @@ export class PlayerContext {
   private _hand: PlayerHand;
   private _discard: Discard;
 
-  constructor () {
-    this._hand = new PlayerHand();
+  constructor(hash: string) {
+    this._hand = new PlayerHand(hash);
     this._discard = new Discard();
   }
 
   /**
    * プレイヤーの手
    */
-  get hand(): PlayerHand { return this._hand; }
+  get hand(): PlayerHand {
+    return this._hand;
+  }
 
   /**
    * プレイヤーの捨て牌
    */
-  get discard(): Discard { return this._discard; }
+  get discard(): Discard {
+    return this._discard;
+  }
 }

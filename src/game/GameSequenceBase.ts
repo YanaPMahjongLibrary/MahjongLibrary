@@ -9,21 +9,23 @@ export abstract class GameSequenceBase {
   /**
    * コンストラクタ
    */
-  constructor (private maximumPlayerCount: number = 4) {
+  constructor(private maximumPlayerCount: number = 4) {
     this.players = [];
   }
 
-  join (player: IPlayer) {
+  join(player: IPlayer) {
     // 規定プレイヤー数以上の参加は許可しない
-    if (this.players.length + 1 > this.maximumPlayerCount) { return; }
-    
+    if (this.players.length + 1 > this.maximumPlayerCount) {
+      return;
+    }
+
     this.players.push(player);
     if (this.players.length === this.maximumPlayerCount) {
       // プレイヤーが揃ったら開始する
       this.start();
     }
   }
-  
+
   /**
    * 開始
    */

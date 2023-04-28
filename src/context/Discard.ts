@@ -6,12 +6,14 @@ import { Tile } from "../tile/Tile";
 export class Discard {
   private _tiles: Tile[];
 
-  constructor () {
+  constructor() {
     this._tiles = [];
   }
 
   /**
    * 捨て牌
    */
-  get tiles(): Tile[] { return this._tiles.map(t => t.clone()); }
+  get tiles(): Tile[] {
+    return this._tiles.map((t) => t.clone());
+  }
 }
