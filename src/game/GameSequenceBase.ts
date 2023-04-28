@@ -1,10 +1,10 @@
-import { IPlayer } from "../player/Player";
+import { PlayerBase } from "../player/Player";
 
 /**
  * ゲーム進行管理基底クラス
  */
 export abstract class GameSequenceBase {
-  private players: IPlayer[];
+  private players: PlayerBase[];
 
   /**
    * コンストラクタ
@@ -13,7 +13,7 @@ export abstract class GameSequenceBase {
     this.players = [];
   }
 
-  join(player: IPlayer) {
+  join(player: PlayerBase) {
     // 規定プレイヤー数以上の参加は許可しない
     if (this.players.length + 1 > this.maximumPlayerCount) {
       return;
