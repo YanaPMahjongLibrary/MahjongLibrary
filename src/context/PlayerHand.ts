@@ -1,6 +1,6 @@
 import { Tile } from "../tile/Tile";
 import { Meld } from "./Meld";
-import { ContextdAccessHashError } from "../errors/ContextAccessHashError";
+import { ContextAccessHashError } from "../errors/ContextAccessHashError";
 
 /**
  * プレイヤーの手を表すクラス
@@ -26,9 +26,9 @@ export class PlayerHand {
    * @returns 手牌オブジェクト
    * @throws ContextdAccessHashError ハッシュ値が食い違っていたらこの例外がthrowされる
    */
-  getHandAccess(hash: string) {
+  getAccess(hash: string) {
     if (this.hash !== hash) {
-      throw new ContextdAccessHashError();
+      throw new ContextAccessHashError();
     }
     return new PlayerHandAccess(this._tiles);
   }

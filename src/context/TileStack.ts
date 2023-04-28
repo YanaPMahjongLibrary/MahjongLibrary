@@ -1,3 +1,4 @@
+import { ContextAccessHashError } from "@src/errors/ContextAccessHashError";
 import { Tile } from "..";
 import { ETileKind, TileType } from "../tile/TileType";
 
@@ -7,9 +8,44 @@ import { ETileKind, TileType } from "../tile/TileType";
 export class TileStack {
   private stack: number[];
 
-  constructor() {
+  /**
+   * コンストラクタ
+   * @param hash アクセスオブジェクト取得用ハッシュ
+   */
+  constructor(private hash: string) {
     this.stack = [];
   }
+
+  /**
+   * 牌山アクセスオブジェクト取得
+   * @param hash ハッシュ値
+   * @returns 牌山アクセスオブジェクト
+   * @throws ContextAccessHashError ハッシュ値の検証に失敗した場合にthrowされる
+   */
+  getAccess(hash: string) {
+    if (this.hash !== hash) {
+      throw new ContextAccessHashError();
+    }
+    return new TileStackAccess(this.stack);
+  }
+
+  /**
+   * 王牌を考慮した残り枚数
+   */
+  get count(): number {
+    return this.stack.length - 14;
+  }
+}
+
+/**
+ * 牌山へのアクセスクラス
+ */
+export class TileStackAccess {
+  /**
+   * コンストラクタ
+   * @param stack 牌山の配列
+   */
+  constructor(private stack: number[]) {}
 
   init() {
     this.stack.splice(0);
