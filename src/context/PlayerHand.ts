@@ -1,6 +1,6 @@
 import { Tile } from "../tile/Tile";
 import { Meld } from "./Meld";
-import { ContextdAccessHashError } from "../exceptions/ContextAccessHashError";
+import { ContextdAccessHashError } from "../errors/ContextAccessHashError";
 
 /**
  * プレイヤーの手を表すクラス
