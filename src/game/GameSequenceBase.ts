@@ -103,5 +103,7 @@ export abstract class GameSequenceBase {
       }
       playerAccess.tiles.push(tile);
     }
+
+    // TODO: 親の第一自摸からスタートする
   }
 }
