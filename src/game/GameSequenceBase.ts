@@ -90,18 +90,18 @@ export abstract class GameSequenceBase {
           playerAccess.tiles.push(tile);
         }
       }
+    }
 
-      for (let j = 0; j < this.maximumPlayerCount; j++) {
-        const playerAccess = this._boardContext.playerContexts[
-          j
-        ].hand.getAccess(this._playerHashes[j]);
-        const tile = access.pick();
-        if (!tile) {
-          // 何故か足りなかった
-          throw Error("Unknown TileStack Count.");
-        }
-        playerAccess.tiles.push(tile);
+    for (let i = 0; i < this.maximumPlayerCount; i++) {
+      const playerAccess = this._boardContext.playerContexts[i].hand.getAccess(
+        this._playerHashes[i]
+      );
+      const tile = access.pick();
+      if (!tile) {
+        // 何故か足りなかった
+        throw Error("Unknown TileStack Count.");
       }
+      playerAccess.tiles.push(tile);
     }
   }
 }
