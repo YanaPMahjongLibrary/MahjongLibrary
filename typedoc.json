@@ -2,6 +2,6 @@
   "entryPoints": ["./src/**/*.ts"],
   "out": "./docs/",
   "includes": "./src/**/*.ts",
-  "exclude": ["**/node_modules/**/*", "./tests/**/*", "./src/**/index.ts"],
+  "exclude": ["**/node_modules/**/*", "./tests/**/*"],
   "excludeExternals": true
 }
