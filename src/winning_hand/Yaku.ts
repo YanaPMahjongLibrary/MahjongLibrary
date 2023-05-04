@@ -21,7 +21,6 @@ export interface IYaku {
    */
   get isYakuman(): boolean;
 
-  // TODO: Boardクラスを実装したら解禁
   /**
    * 判定
    * @params hand 手牌
