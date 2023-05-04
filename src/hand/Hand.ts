@@ -47,6 +47,11 @@ export class Hand {
  * 手牌コンテキスト
  */
 export class HandContext {
+  /**
+   * コンストラクタ
+   * @param _tiles 手牌配列
+   * @param _furos 副露配列
+   */
   constructor(private _tiles: Tile[], private _furos: Furo[]) {
   }
   
