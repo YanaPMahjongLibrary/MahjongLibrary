@@ -12,7 +12,7 @@ export class Wanpai {
    * コンストラクタ
    * @param tiles 初期の牌リスト
    */
-  constructor(private tiles: Tile[], private maxDora = 4) {
+  constructor(private tiles: Tile[], private pickCount = 4) {
     // 初期ドラ設定
     this.makeDora();
   }
@@ -56,13 +56,13 @@ export class Wanpai {
   /**
    * 引ける牌があるか？
    */
-  get isPickable(): boolean { return this.index < this.maxDora; }
+  get isPickable(): boolean { return this.index < this.pickCount; }
 
   /**
    * ドラ生成
    */
   private makeDora(): void {
     const count = this._doras.length * 2;
-    this._doras.push(new Dora(this.tiles[count + 4], this.tiles[count + 5]));
+    this._doras.push(new Dora(this.tiles[count + this.pickCount], this.tiles[count + this.pickCount + 1]));
   }
 }
