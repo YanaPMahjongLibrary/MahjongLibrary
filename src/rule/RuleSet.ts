@@ -14,7 +14,13 @@ export class RuleSet {
     this.rules[rule.key] = rule;
   }
 
-
+  /**
+   * ルールセットコンテキストを生成
+   * @returns ルールセットコンテキスト
+   */
+  makeContext(): RuleSetContext {
+    return new RuleSetContext(this.rules);
+  }
 }
 
 /**

@@ -7,10 +7,18 @@ import { IThinkable } from "@src/player/Thinkable";
  * ゲームクラス
  */
 export class Game extends EventTarget {
-  private sequence: GameSequenceBase | null = null;
   private players: IThinkable[] = [];
   private playerHands: Hand[] = [];
   private board: Board = new Board();
+
+  /**
+   * コンストラクタ
+   * @param sequence ゲームシーケンス実装クラス
+   */
+  constructor(private sequence: GameSequenceBase) {
+    super();
+    this.sequence.onBindGame(this);
+  }
 
   /**
    * ゲームシーケンスをセット
