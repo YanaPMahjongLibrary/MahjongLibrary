@@ -58,6 +58,41 @@ export class Board {
   }
 
   /**
+   * 次の局へ
+   * @param renchan 連荘か？
+   */
+  toNextRound(renchan: boolean): void {
+    if (!renchan) {
+      // 次局へ
+      if (this.round.roundNum < this.playersBoard.length) {
+        this.round = new Round(this.round.wind, this.round.roundNum + 1);
+      } else {
+        // 次の場風へ
+        const nextWind = ((current: EWind) => {
+          switch (current) {
+            case EWind.EAST: return EWind.SOUTH;    // 南入
+            case EWind.SOUTH: return EWind.WEST;    // 西入
+            case EWind.WEST: return EWind.NORTH;    // 北入
+          }
+          return EWind.EAST;    // とりあえず東場に戻す
+        })(this.round.wind);
+        this.round = new Round(nextWind, 0);
+      }
+    } else {
+      // 連荘
+      this.addCount();
+    }
+  }
+
+  /**
+   * 積み棒を増やす
+   * @param add 増やす本数
+   */
+  addCount(add: number = 1): void {
+    this.counts = new Counts(this.counts.value + add);
+  }
+
+  /**
    * 牌山のリセット
    * @param wallTiles 牌山の牌（洗牌済み）
    */
