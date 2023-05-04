@@ -8,8 +8,9 @@ export class Furo {
    * コンストラクタ
    * @param _tiles 牌の配列
    * @param _whose どこから鳴いたか
+   * @param _isKakan 加槓か？
    */
-  constructor(private _tiles: Tile[], private _whose: number) {
+  constructor(private _tiles: Tile[], private _whose: number, private _isKakan: boolean = false) {
   }
 
   /**
@@ -21,4 +22,9 @@ export class Furo {
    * どこから鳴いたか
    */
   get whose(): number { return this._whose; }
+
+  /**
+   * 加槓か？
+   */
+  get isKakan(): boolean { return this._isKakan; }
 }
