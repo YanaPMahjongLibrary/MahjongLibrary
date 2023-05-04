@@ -9,14 +9,14 @@ import { Han } from "./Han";
 /**
  * 和了り点計算
  */
-export class WinningScoreCaliculator {
+export class WinningScoreCalculator {
   /**
    * 生成
    * @param hand 手牌
    * @param yakus 採用役
    */
-  static generate(hand: Hand, board: BoardContext, rules: RuleBase): WinningScoreCaliculator {
-    return new WinningScoreCaliculator(new WinningScore(new Fu(30), new Han(1)), []); // とりあえず仮で返しておく
+  static generate(hand: Hand, board: BoardContext, rules: RuleBase): WinningScoreCalculator {
+    return new WinningScoreCalculator(new WinningScore(new Fu(30), new Han(1)), []); // とりあえず仮で返しておく
   }
 
   constructor(private _score: WinningScore, private _yakus: IYaku[]) {
