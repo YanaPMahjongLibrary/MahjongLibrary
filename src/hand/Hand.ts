@@ -64,4 +64,25 @@ export class HandContext {
    * 副露
    */
   get furos(): Furo[] { return this._furos.concat(); }
+
+  /**
+   * 指定した牌で構成可能な副露のリストを返す
+   * @param tile 牌
+   * @param ownPlayerIndex 自身のプレイヤーインデックス
+   * @param otherPlayerIndex 牌を切ったプレイヤーのインデックス
+   */
+  ableFuroList(tile: Tile, ownPlayerIndex: number, otherPlayerIndex: number): Furo[] {
+    let list: Furo[] = [];
+    // 明刻
+    
+    // 明槓
+
+    // 大明順
+
+    // 暗槓
+
+    // 加槓
+    
+    return list;
+  }
 }
