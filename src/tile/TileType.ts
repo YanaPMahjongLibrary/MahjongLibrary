@@ -7,7 +7,6 @@ import { Enums } from "../enums";
 export class TileType {
   private _num: number;
   private _kind: Enums.ETileKind;
-  private _isRed: boolean;
 
   /**
    * ビットフィールドへのシリアライズ
@@ -17,10 +16,9 @@ export class TileType {
    */
   static serializeToBitField(
     num: number,
-    kind: Enums.ETileKind,
-    isRed: boolean
+    kind: Enums.ETileKind
   ): number {
-    return num | kind || (isRed ? 1 : 0) << 6;
+    return num | kind;
   }
 
   /**
@@ -40,14 +38,6 @@ export class TileType {
   static parseKindFromBitfield(bitField: number): Enums.ETileKind {
     return bitField & 0b110000;
   }
-  /**
-   * ビットフィールドから赤牌フラグに変換
-   * @param bitField ビットフィールド
-   * @returns 赤牌フラグ
-   */
-  static parseIsRedFromBitfield(bitField: number): boolean {
-    return (bitField & 0b1000000) !== 0;
-  }
 
   /**
    * コンストラクタ
@@ -56,8 +46,7 @@ export class TileType {
   constructor(bitField: number) {
     this._num = TileType.parseNumFromBitfield(bitField);
     const kind = TileType.parseKindFromBitfield(bitField);
-    this._isRed = TileType.parseIsRedFromBitfield(bitField);
-
+  
     // 牌の種類バリデーション
     switch (kind) {
       case Enums.ETileKind.MANZU:
@@ -95,17 +84,10 @@ export class TileType {
   }
 
   /**
-   * 赤牌か
-   */
-  get isRed(): boolean {
-    return this._isRed;
-  }
-
-  /**
    * シリアライズ
    * @returns シリアライズされたビットフィールド
    */
   serialize(): number {
-    return TileType.serializeToBitField(this._num, this._kind, this._isRed);
+    return TileType.serializeToBitField(this._num, this._kind);
   }
 }

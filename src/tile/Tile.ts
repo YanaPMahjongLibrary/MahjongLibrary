@@ -15,16 +15,15 @@ export class Tile {
   static deserialize(bitField: number): Tile {
     const num = TileType.parseNumFromBitfield(bitField);
     const kind = TileType.parseKindFromBitfield(bitField);
-    const isRed = TileType.parseIsRedFromBitfield(bitField);
-    return new Tile(num, kind, isRed);
+    return new Tile(num, kind);
   }
 
   /**
    * コンストラクタ
    * @param bitField 牌の種類を表すビットフィールド
    */
-  constructor(num: number, kind: Enums.ETileKind, isRed: boolean) {
-    this._type = new TileType(TileType.serializeToBitField(num, kind, isRed));
+  constructor(num: number, kind: Enums.ETileKind) {
+    this._type = new TileType(TileType.serializeToBitField(num, kind));
   }
 
   /**
@@ -32,7 +31,7 @@ export class Tile {
    * @returns 同じ牌
    */
   clone(): Tile {
-    return new Tile(this._type.num, this._type.kind, this._type.isRed);
+    return new Tile(this._type.num, this._type.kind);
   }
 
   /**
