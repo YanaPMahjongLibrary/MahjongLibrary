@@ -1,4 +1,4 @@
-import { Wind } from "./Wind";
+import { EWind } from "@src/enums";
 
 /**
  * 場風と局数
@@ -10,13 +10,13 @@ export class Round {
    * @param _wind 場風
    * @param _roundNum 局数
    */
-  constructor(private _wind: Wind, private _roundNum: number) {
+  constructor(private _wind: EWind, private _roundNum: number) {
   }
 
   /**
    * 場風
    */
-  get wind(): Wind { return this._wind; }
+  get wind(): EWind { return this._wind; }
 
   /**
    * 局数
