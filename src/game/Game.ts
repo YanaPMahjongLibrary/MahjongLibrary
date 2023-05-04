@@ -3,7 +3,7 @@ import { GameSequenceBase } from "./GameSequence";
 /**
  * ゲームクラス
  */
-export class Game {
+export class Game extends EventTarget {
   private sequence: GameSequenceBase | null = null;
 
   /**
