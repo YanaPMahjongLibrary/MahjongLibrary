@@ -1,29 +1,35 @@
 import { TileType } from "./TileType";
 import { Enums } from "../enums";
+import { TileProperty } from "./TileProperty";
 
 /**
  * 牌を表すクラス
  */
 export class Tile {
   private _type: TileType;
+  private _property: TileProperty
 
   /**
    * デシリアライズ
    * @param bitField 牌の種類を表すビットフィールド
+   * @param propertyBitField プロパティを表すビットフィールド
    * @returns 牌オブジェクト
    */
-  static deserialize(bitField: number): Tile {
+  static deserialize(bitField: number, propertyBitField: number = 0): Tile {
     const num = TileType.parseNumFromBitfield(bitField);
     const kind = TileType.parseKindFromBitfield(bitField);
-    return new Tile(num, kind);
+    return new Tile(num, kind, propertyBitField);
   }
 
   /**
    * コンストラクタ
-   * @param bitField 牌の種類を表すビットフィールド
+   * @param num 牌の数字
+   * @param kind 牌の種類
+   * @param propertyBitField プロパティを表すビットフィールド
    */
-  constructor(num: number, kind: Enums.ETileKind) {
+  constructor(num: number, kind: Enums.ETileKind, propertyBitField: number) {
     this._type = new TileType(TileType.serializeToBitField(num, kind));
+    this._property = new TileProperty(propertyBitField);
   }
 
   /**
@@ -31,7 +37,7 @@ export class Tile {
    * @returns 同じ牌
    */
   clone(): Tile {
-    return new Tile(this._type.num, this._type.kind);
+    return new Tile(this._type.num, this._type.kind, this._property.bits);
   }
 
   /**
@@ -40,4 +46,9 @@ export class Tile {
   get type(): TileType {
     return this._type;
   }
+
+  /**
+   * 牌のプロパティ
+   */
+  get property(): TileProperty { return this._property; }
 }
