@@ -56,4 +56,9 @@ export class Furo {
    * 加槓か？
    */
   get isKakan(): boolean { return this._isKakan; }
+
+  /**
+   * 暗槓か？
+   */
+  get isAnkan(): boolean { return !this._isKakan && this._tiles.length === 4; }
 }
