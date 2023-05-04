@@ -4,7 +4,7 @@ import { Han } from "./Han";
 /**
  * 和了り点
  */
-export class WinningPoint {
+export class WinningScore {
   /**
    * コンストラクタ
    * @param _fu 符
