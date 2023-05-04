@@ -24,28 +24,51 @@ export class Board {
   private playersBoard: PlayerBoard[];
   private counts: Counts;
   private round: Round;
+  private pickableWanpaiCount: number;
 
-  constructor(wallTiles: Tile[], pickableWanpaiCount: number) {
-    this.wall = new Wall(wallTiles);
-    const wanpaiTiles: Tile[] = [];
-    // 自摸れる王牌の数＋表ドラ＋裏ドラの数だけ繰り返す
-    for (let i = 0; i < pickableWanpaiCount * 3; i++) {
-      wanpaiTiles.push(this.wall.pickForWanpai()!);
-    }
-    this.wanpai = new Wanpai(wanpaiTiles);
+  /**
+   * コンストラクタ
+   */
+  constructor() {
+    this.wall = new Wall([]);
+    this.wanpai = new Wanpai([], 4);
     this.playersBoard = [];
+    this.counts = new Counts(0);
+    this.round = new Round(EWind.EAST, 1);
+    this.pickableWanpaiCount = 4;
+  }
 
-    // TODO: どこから持ってくるんだこんなの
-    const playerCount = 4;
-    const initPoints = 25000;
+  /**
+   * 初期化
+   * @param pickableWanpaiCount 嶺上牌の枚数
+   * @param playerCount プレイヤー人数
+   * @param initialPoints 配給原点
+   */
+  initialize(pickableWanpaiCount: number, playerCount: number, initialPoints: number) {
+    this.pickableWanpaiCount = pickableWanpaiCount;
+    this.playersBoard = [];
     for (let i = 0; i < playerCount; i++) {
       this.playersBoard.push({
         discard: new Discard(),
-        points: new Points(initPoints),
+        points: new Points(initialPoints),
       })
     }
     this.counts = new Counts(0);
     this.round = new Round(EWind.EAST, 1);
+  }
+
+  /**
+   * 牌山のリセット
+   * @param wallTiles 牌山の牌（洗牌済み）
+   */
+  resetWall(wallTiles: Tile[]): void {
+    this.wall = new Wall(wallTiles);
+    const wanpaiTiles: Tile[] = [];
+    // 自摸れる王牌の数＋表ドラ＋裏ドラの数だけ繰り返す
+    for (let i = 0; i < this.pickableWanpaiCount * 3; i++) {
+      wanpaiTiles.push(this.wall.pickForWanpai()!);
+    }
+    this.wanpai = new Wanpai(wanpaiTiles);
   }
 
   /**
