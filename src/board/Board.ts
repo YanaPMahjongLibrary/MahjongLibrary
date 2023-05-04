@@ -49,6 +49,14 @@ export class Board {
   }
 
   /**
+   * 場況コンテキスト生成
+   * @returns 場況コンテキスト
+   */
+  makeContext(): BoardContext {
+    return new BoardContext(this.wall.count, this.wanpai.getDoras(false), this.playersBoard.concat(), this.counts, this.round);
+  }
+  
+  /**
    * 自摸る牌があるか？
    */
   get hasNextPick(): boolean { return this.wall.count > 0; }
@@ -79,4 +87,39 @@ export class Board {
   discard(playerIndex: number, tile: Tile): void {
     this.playersBoard[playerIndex].discard.add(tile);
   }
+}
+
+/**
+ * 場況コンテキスト
+ * Boardクラスのreadonlyなデータ
+ */
+export class BoardContext {
+  /**
+   * コンストラクタ
+   */
+  constructor(private _wallCount: number,
+    private _doras: Tile[],
+    private _playersBoard: PlayerBoard[],
+    private _counts: Counts,
+    private _round: Round) {}
+
+  /**
+   * ドラ
+   */
+  get doras(): Tile[] { return this._doras.concat(); }
+
+  /**
+   * プレイヤーの場況配列
+   */
+  get playersBoard(): PlayerBoard[] { return this._playersBoard.concat(); }
+
+  /**
+   * 積み棒
+   */
+  get counts(): Counts { return this._counts; }
+
+  /**
+   * 場風と局数
+   */
+  get round(): Round { return this._round; }
 }
