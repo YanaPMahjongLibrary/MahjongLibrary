@@ -9,13 +9,17 @@ import { Game } from "./Game";
  * ゲームシーケンス基底クラス
  */
 export abstract class GameSequenceBase {
-  /*
-  protected board: Board;
-  protected rule: RuleBase;
-  protected players: IThinkable[];
-  protected playerHands: Hand[];
-  */
+  protected players: IThinkable[] = [];
+  protected playerHands: Hand[] = [];
+  protected board: Board = new Board();
 
+  /**
+   * コンストラクタ
+   * @param ruleBase ルール基底クラス
+   */
+  constructor(protected ruleBase: RuleBase) {
+  }
+  
   /**
    * 牌山生成
    */
