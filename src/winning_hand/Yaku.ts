@@ -1,5 +1,5 @@
 import { BoardContext } from "@src/board/Board";
-import { Hand } from "@src/hand/Hand";
+import { HandContext } from "@src/hand/Hand";
 import { RuleSetContext } from "@src/rule/RuleSet";
 
 /**
@@ -27,5 +27,5 @@ export interface IYaku {
    * @params board 場況
    * @params rule ルール
    */
-  check(hand: Hand, board: BoardContext, rule: RuleSetContext): boolean;
+  check(hand: HandContext, board: BoardContext, rule: RuleSetContext): boolean;
 }

@@ -34,5 +34,29 @@ export class Hand {
     this._tiles.splice(index, 1);
   }
 
-  /* TODO: 副露関係の実装 */
+  /**
+   * 手牌コンテキスト生成
+   * @returns 手牌コンテキスト
+   */
+  makeContext(): HandContext {
+    return new HandContext(this.tiles, this.furos);
+  }
+}
+
+/**
+ * 手牌コンテキスト
+ */
+export class HandContext {
+  constructor(private _tiles: Tile[], private _furos: Furo[]) {
+  }
+  
+  /**
+   * 手牌
+   */
+  get tiles(): Tile[] { return this._tiles.concat(); }
+
+  /**
+   * 副露
+   */
+  get furos(): Furo[] { return this._furos.concat(); }
 }

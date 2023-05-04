@@ -1,4 +1,4 @@
-import { Hand } from "@src/hand/Hand";
+import { HandContext } from "@src/hand/Hand";
 import { IYaku } from "./Yaku";
 import { BoardContext } from "@src/board/Board";
 import { RuleBase } from "@src/rule/RuleBase";
@@ -15,7 +15,7 @@ export class WinningScoreCalculator {
    * @param hand 手牌
    * @param yakus 採用役
    */
-  static generate(hand: Hand, board: BoardContext, rules: RuleBase): WinningScoreCalculator {
+  static generate(hand: HandContext, board: BoardContext, rules: RuleBase): WinningScoreCalculator {
     return new WinningScoreCalculator(new WinningScore(new Fu(30), new Han(1)), []); // とりあえず仮で返しておく
   }
 
