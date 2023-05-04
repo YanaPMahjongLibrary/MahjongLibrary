@@ -1,9 +1,17 @@
+import { IYaku } from "@src/winning_hand/Yaku";
 import { RuleSet } from "./RuleSet";
 
 /**
  * ルールを表す基底クラス
  */
 export abstract class RuleBase {
+  /**
+   * ルールセット
+   */
   protected _ruleSet: RuleSet = new RuleSet();
-  // TODO: 採用役の配列を追加(IYakuインタフェース定義後に行う)
+  
+  /**
+   * 採用役リスト
+   */
+  protected _yakuList: IYaku[] = [];
 }
