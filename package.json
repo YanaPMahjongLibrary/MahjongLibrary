@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "doc": "typedoc",
+    "doc": "rm -rf ./docs/* && typedoc",
     "puml": "tplant --input ./src/**/* --output ./uml/Classes.puml"
   },
   "repository": {
