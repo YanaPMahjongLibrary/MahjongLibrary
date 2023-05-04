@@ -74,26 +74,28 @@ export class HandContext {
   canFuroList(tile: Tile, ownPlayerIndex: number, otherPlayerIndex: number): Furo[] {
     let list: Furo[] = [];
 
-    // 刻子・順子に関しては取り得る３枚の組み合わせを全列挙し、面子として成立するものだけを抽出する
-    for (let i = 0; i < this._tiles.length - 1; i++) {
-      for (let j = 1; j < this._tiles.length; j++) {
-        list.push(new Furo([tile, this._tiles[i], this._tiles[j]], otherPlayerIndex, false, false));
+    if (ownPlayerIndex !== otherPlayerIndex) {
+      // 刻子・順子に関しては取り得る３枚の組み合わせを全列挙し、面子として成立するものだけを抽出する
+      for (let i = 0; i < this._tiles.length - 1; i++) {
+        for (let j = 1; j < this._tiles.length; j++) {
+          list.push(new Furo([tile, this._tiles[i], this._tiles[j]], otherPlayerIndex, false, false));
+        }
+      }
+      list = list.filter(f => f.checkValid());
+    } else {
+      // 加槓
+      // 同じ牌の明刻を列挙するだけ
+      const minko = this._furos.filter(f => f.tiles.filter(t => t.equal(tile)).length === 3);
+      if (minko.length === 1) {
+        list.push(new Furo([tile, ...minko[0].tiles], ownPlayerIndex, true));
       }
     }
-    list = list.filter(f => f.checkValid());
-
+    
     // 暗槓・大明槓
     // 同じ牌が手牌に３枚あれば成立
     const sameHais = this._tiles.filter(t => t.equal(tile));
     if (sameHais.length >= 3) {
       list.push(new Furo(sameHais, otherPlayerIndex));
-    }
-
-    // 加槓
-    // 同じ牌の明刻を列挙するだけ
-    const minko = this._furos.filter(f => f.tiles.filter(t => t.equal(tile)).length === 3);
-    if (minko.length === 1) {
-      list.push(new Furo([tile, ...minko[0].tiles], ownPlayerIndex, true));
     }
     
     return list;
