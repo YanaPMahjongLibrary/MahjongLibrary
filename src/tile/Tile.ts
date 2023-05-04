@@ -1,5 +1,5 @@
 import { TileType } from "./TileType";
-import { Enums } from "../enums";
+import { ETileKind } from "../enums";
 import { TileProperty } from "./TileProperty";
 
 /**
@@ -27,7 +27,7 @@ export class Tile {
    * @param kind 牌の種類
    * @param propertyBitField プロパティを表すビットフィールド
    */
-  constructor(num: number, kind: Enums.ETileKind, propertyBitField: number) {
+  constructor(num: number, kind: ETileKind, propertyBitField: number) {
     this._type = new TileType(TileType.serializeToBitField(num, kind));
     this._property = new TileProperty(propertyBitField);
   }
