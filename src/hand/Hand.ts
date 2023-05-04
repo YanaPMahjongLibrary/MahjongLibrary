@@ -39,7 +39,7 @@ export class Hand {
    * @returns 手牌コンテキスト
    */
   makeContext(): HandContext {
-    return new HandContext(this.tiles, this.furos);
+    return new HandContext(this._tiles, this._furos);
   }
 }
 
