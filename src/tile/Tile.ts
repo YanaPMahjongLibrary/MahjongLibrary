@@ -70,7 +70,7 @@ export class Tile {
    * @param offset オフセット
    * @param loop ループするか？（ドラの判定で使用）
    */
-  getOffsetTile(offset: number, loop: boolean): Tile | null {
+  getOffsetTile(offset: number, loop: boolean = false): Tile | null {
     let num = this._type.num + offset;
     const {min, max} = ((num: number, kind: ETileKind) => {
       // 数牌
