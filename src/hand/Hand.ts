@@ -67,6 +67,8 @@ export class HandContext {
 
   /**
    * 指定した牌で構成可能な副露のリストを返す
+   * 
+   * @note どこからでもチーできるので、上家以外のチーは利用者側で弾く事
    * @param tile 牌
    * @param ownPlayerIndex 自身のプレイヤーインデックス
    * @param otherPlayerIndex 牌を切ったプレイヤーのインデックス
