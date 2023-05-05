@@ -1,6 +1,7 @@
 import { GameSequenceBase } from "./GameSequence";
 import { Board } from "@src/board/Board";
 import { Player } from "@src/player/Player";
+import { IThinkable } from "@src/player/Thinkable";
 import { PointsRuleValue, requiredRuleKeys } from "@src/rule/RequiredRules";
 
 /**
@@ -27,6 +28,7 @@ export enum ENextRoundReason {
  */
 export class Game extends EventTarget {
   private players: Player[] = [];
+  private playerCount: number;
   private board: Board = new Board();
 
   /**
@@ -36,6 +38,22 @@ export class Game extends EventTarget {
   constructor(private sequence: GameSequenceBase) {
     super();
     this.sequence.onBindGame(this);
+    const rules = this.sequence.makeRuleSetContext();
+    this.playerCount = rules.getRuleValue<number>(requiredRuleKeys.playerCount)!;
+  }
+
+  /**
+   * プレイヤー参加
+   * @param think 思考オブジェクト
+   */
+  joinPlayer(think: IThinkable): void {
+    if (this.players.length >= this.playerCount) { return; }
+    
+    this.players.push(new Player(think));
+    // 揃ったら開始
+    if (this.players.length === this.playerCount) {
+      this.start();
+    }
   }
 
   /**
@@ -53,9 +71,8 @@ export class Game extends EventTarget {
   start(): void {
     const rules = this.sequence.makeRuleSetContext();
     const wanpaiCount = rules.getRuleValue<number>(requiredRuleKeys.wanpaiCount)!;
-    const playerCount = rules.getRuleValue<number>(requiredRuleKeys.playerCount)!;
     const points = rules.getRuleValue<PointsRuleValue>(requiredRuleKeys.points)!;
-    this.board.initialize(wanpaiCount, playerCount, points.initial);
+    this.board.initialize(wanpaiCount, this.playerCount, points.initial);
     this.reset();
   }
 
