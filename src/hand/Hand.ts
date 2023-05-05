@@ -5,7 +5,6 @@ import { Furo } from "./Furo";
  * プレイヤーの手を表すクラス
  */
 export class Hand {
-  private _tiles: Tile[] = [];
   private _furos: Furo[] = [];
 
   /**
@@ -17,6 +16,24 @@ export class Hand {
    * 副露
    */
   get furos(): Furo[] { return this._furos.concat(); }
+
+  /**
+   * コンストラクタ
+   * @param _tiles 初期の牌リスト
+   */
+  constructor(private _tiles: Tile[]) {
+    this.sort();
+  }
+  
+  /**
+   * 理牌
+   */
+  sort(): void {
+    this._tiles.sort((a, b) => {
+      if (a.type.kind === b.type.kind) { return a.type.kind > b.type.kind ? -1 : 1; }
+      return a.type.num > b.type.num ? -1 : 1;
+    });
+  }
 
   /**
    * 牌を追加

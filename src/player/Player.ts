@@ -6,7 +6,7 @@ import { StartGameNotice } from "@src/notice/Notices";
  * プレイヤークラス
  */
 export class Player {
-  private hand: Hand = new Hand();
+  private hand: Hand = new Hand([]);
   
   /**
    * コンストラクタ
