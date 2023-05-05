@@ -24,6 +24,20 @@ export class Wall {
   }
 
   /**
+   * 複数枚自摸る
+   * @param count 自摸る枚数
+   */
+  pickMultiple(count: number): Tile[] {
+    const tiles: Tile[] = [];
+    for (let i = 0 ; i < count; i++) {
+      const tile = this.pick();
+      if (tile === null) { throw new Error("Fail Pick Multiple"); }
+      tiles.push(tile);
+    }
+    return tiles;
+  }
+
+  /**
    * 王牌用に牌を持ってくる
    * @returns 持ってきた牌。持ってくる牌が無いならnull
    */

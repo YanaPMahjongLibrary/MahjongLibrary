@@ -1,9 +1,10 @@
-import { StartGameNotice, addStartGameEventListener } from "@src/notice/Notices";
+import { StartGameNotice, StartRoundNotice, addStartGameEventListener } from "@src/notice/Notices";
 import { GameSequenceBase } from "./GameSequence";
 import { Board } from "@src/board/Board";
 import { Player } from "@src/player/Player";
 import { IThinkable } from "@src/player/Thinkable";
 import { PointsRuleValue, requiredRuleKeys } from "@src/rule/RequiredRules";
+import { Tile } from "@src/tile/Tile";
 
 /**
  * 次局に進む理由
@@ -73,6 +74,14 @@ export class Game extends EventTarget {
    * ゲーム開始
    */
   start(): void {
+    // 起家決め
+    // プレイヤーの配列をランダムにソートし、インデックス0が起家となる
+    for (let i = this.playerCount - 1; i >= 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.players[i], this.players[j]] = [this.players[i], this.players[j]];
+    }
+    
+    // ルール設定
     const rule = this.sequence.makeRuleContext();
     const ruleSet = rule.ruleSetContext;
     const wanpaiCount = ruleSet.getRuleValue<number>(requiredRuleKeys.wanpaiCount)!;
@@ -106,7 +115,24 @@ export class Game extends EventTarget {
    * 局を開始
    */
   private startRound(): void {
-    // TODO: 配牌と通知
+    // 配牌
+    const tiles: Tile[][] = new Array<Tile[]>(4);
+    for (let i = 0; i < this.playerCount; i++) {
+      for (let j = 0; j < 3; j++) {
+        tiles[i].concat(this.board.pickMultiple(4));
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+      const tile = this.board.pick();
+      if (tile === null) { throw new Error("Start Round Failed. Wall is not enougth."); }
+      tiles[i].push(tile);
+      this.players[i].setInitialHand(tiles[i]);
+    }
+
+    // 通知
+    this.dispatchEvent(new StartRoundNotice(this.sequence.makeRuleContext()));
+
+    // TODO: 親の切り番から開始
   }
 
   /**

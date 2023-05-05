@@ -128,6 +128,15 @@ export class Board {
   }
 
   /**
+   * 複数枚自摸る
+   * @param count 自摸る枚数
+   * @returns 自摸った牌の配列
+   */
+  pickMultiple(count: number): Tile[] {
+    return this.wall.pickMultiple(count);
+  }
+
+  /**
    * 王牌から自摸る
    * @returns 自摸った牌。自摸れない場合はnull
    */
