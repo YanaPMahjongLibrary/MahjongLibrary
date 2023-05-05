@@ -1,3 +1,4 @@
+import { StartGameNotice, addStartGameEventListener } from "@src/notice/Notices";
 import { GameSequenceBase } from "./GameSequence";
 import { Board } from "@src/board/Board";
 import { Player } from "@src/player/Player";
@@ -49,7 +50,10 @@ export class Game extends EventTarget {
   joinPlayer(think: IThinkable): void {
     if (this.players.length >= this.playerCount) { return; }
     
-    this.players.push(new Player(think));
+    const player = new Player(think);
+    addStartGameEventListener(this, player.onStartGame.bind(player));
+    
+    this.players.push(player);
     // 揃ったら開始
     if (this.players.length === this.playerCount) {
       this.start();
@@ -69,11 +73,16 @@ export class Game extends EventTarget {
    * ゲーム開始
    */
   start(): void {
-    const rules = this.sequence.makeRuleContext().ruleSetContext;
-    const wanpaiCount = rules.getRuleValue<number>(requiredRuleKeys.wanpaiCount)!;
-    const points = rules.getRuleValue<PointsRuleValue>(requiredRuleKeys.points)!;
+    const rule = this.sequence.makeRuleContext();
+    const ruleSet = rule.ruleSetContext;
+    const wanpaiCount = ruleSet.getRuleValue<number>(requiredRuleKeys.wanpaiCount)!;
+    const points = ruleSet.getRuleValue<PointsRuleValue>(requiredRuleKeys.points)!;
     this.board.initialize(wanpaiCount, this.playerCount, points.initial);
     this.reset();
+
+    // 通知
+    this.dispatchEvent(new StartGameNotice(rule));
+    this.startRound();
   }
 
   /**
@@ -90,6 +99,14 @@ export class Game extends EventTarget {
       this.board.addCount(count + 1);
     }
     this.reset();
+    this.startRound();
+  }
+
+  /**
+   * 局を開始
+   */
+  private startRound(): void {
+    // TODO: 配牌と通知
   }
 
   /**
