@@ -1,4 +1,4 @@
-import { StartGameNotice, StartRoundNotice, addStartGameEventListener } from "@src/notice/Notices";
+import { StartGameNotice, StartRoundNotice, addStartGameEventListener, addStartRoundEventListener } from "@src/notice/Notices";
 import { GameSequenceBase } from "./GameSequence";
 import { Board } from "@src/board/Board";
 import { Player } from "@src/player/Player";
@@ -53,6 +53,7 @@ export class Game extends EventTarget {
     
     const player = new Player(think);
     addStartGameEventListener(this, player.onStartGame.bind(player));
+    addStartRoundEventListener(this, player.onStartRound.bind(player));
     
     this.players.push(player);
     // 揃ったら開始
