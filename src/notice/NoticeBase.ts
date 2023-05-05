@@ -5,7 +5,7 @@ import { IYaku } from "@src/winning_hand/Yaku";
 /**
  * 通知の基底クラス
  */
-export class NoticeBase extends Event {  
+export abstract class NoticeBase extends Event {  
   private _ruleContext: RuleSetContext;
   private _yakuList: IYaku[];
   
