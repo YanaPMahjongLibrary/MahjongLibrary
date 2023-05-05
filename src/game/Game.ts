@@ -2,6 +2,7 @@ import { GameSequenceBase } from "./GameSequence";
 import { Board } from "@src/board/Board";
 import { Hand } from "@src/hand/Hand";
 import { IThinkable } from "@src/player/Thinkable";
+import { PointsRuleValue, requiredRuleKeys } from "@src/rule/RequiredRules";
 
 /**
  * 次局に進む理由
@@ -53,11 +54,10 @@ export class Game extends EventTarget {
    */
   start(): void {
     const rules = this.sequence.makeRuleSetContext();
-    // TODO: この辺のマジックストリングをどげんかせんといかん
-    const wanpaiCount = rules.getRuleValue<number>("WanpaiCount")!;
-    const playerCount = rules.getRuleValue<number>("PlayerCount")!;
-    const initialPoints = rules.getRuleValue<number>("InitialPoints")!;
-    this.board.initialize(wanpaiCount, playerCount, initialPoints);
+    const wanpaiCount = rules.getRuleValue<number>(requiredRuleKeys.wanpaiCount)!;
+    const playerCount = rules.getRuleValue<number>(requiredRuleKeys.playerCount)!;
+    const points = rules.getRuleValue<PointsRuleValue>(requiredRuleKeys.points)!;
+    this.board.initialize(wanpaiCount, playerCount, points.initial);
     this.reset();
   }
 
