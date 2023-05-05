@@ -54,9 +54,9 @@ export class Game extends EventTarget {
   start(): void {
     const rules = this.sequence.makeRuleSetContext();
     // TODO: この辺のマジックストリングをどげんかせんといかん
-    const wanpaiCount = rules.getRuleValue<number>("WanpaiCount");
-    const playerCount = rules.getRuleValue<number>("PlayerCount");
-    const initialPoints = rules.getRuleValue<number>("InitialPoints");
+    const wanpaiCount = rules.getRuleValue<number>("WanpaiCount")!;
+    const playerCount = rules.getRuleValue<number>("PlayerCount")!;
+    const initialPoints = rules.getRuleValue<number>("InitialPoints")!;
     this.board.initialize(wanpaiCount, playerCount, initialPoints);
     this.reset();
   }

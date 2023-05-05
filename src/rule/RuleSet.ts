@@ -40,7 +40,8 @@ export class RuleSetContext {
    * @param key キー
    * @returns 設定値
    */
-  getRuleValue<T>(key: string): T {
+  getRuleValue<T>(key: string): T | undefined {
+    if (this.rules[key] === undefined) { return undefined; }
     return this.rules[key].value() as T;
   }
 }

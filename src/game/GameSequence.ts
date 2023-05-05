@@ -3,6 +3,8 @@ import { Tile } from "@src/tile/Tile";
 import { Game } from "./Game";
 import { RuleSetContext } from "@src/rule/RuleSet";
 import { IYaku } from "@src/winning_hand/Yaku";
+import { IRuleKeyValue } from "@src/rule/RuleKeyValue";
+import { InitialPointsRule, PlayerCountRule, WanpaiCountRule } from "@src/rule/RequiredRules";
 
 /**
  * ゲームシーケンス基底クラス
@@ -13,6 +15,9 @@ export abstract class GameSequenceBase {
    * @param ruleBase ルール基底クラス
    */
   constructor(private ruleBase: RuleBase) {
+    this.appendRequiredRules(new PlayerCountRule());
+    this.appendRequiredRules(new WanpaiCountRule());
+    this.appendRequiredRules(new InitialPointsRule());
   }
 
   /**
@@ -35,4 +40,13 @@ export abstract class GameSequenceBase {
    * Gameオブジェクトがバインドされた
    */
   abstract onBindGame(game: Game): void;
+
+  /**
+   * 必須ルール追加
+   */
+  private appendRequiredRules<T>(rule: IRuleKeyValue<any>): void {
+    if (this.makeRuleSetContext().getRuleValue(rule.key) === undefined) {
+      this.ruleBase.addRule(rule);
+    }
+  }
 }

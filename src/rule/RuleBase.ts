@@ -1,3 +1,4 @@
+import { IRuleKeyValue } from './RuleKeyValue';
 import { IYaku } from "@src/winning_hand/Yaku";
 import { RuleSet, RuleSetContext } from "./RuleSet";
 
@@ -11,7 +12,14 @@ export abstract class RuleBase {
    * @param _yakuList 採用役リスト
    */
   constructor(private ruleSet: RuleSet, private _yakuList: IYaku[]) {
+  }
 
+  /**
+   * ルール追加
+   * @param rule ルール
+   */
+  addRule(rule: IRuleKeyValue<any>): void {
+    this.ruleSet.setRule(rule);
   }
 
   /**
