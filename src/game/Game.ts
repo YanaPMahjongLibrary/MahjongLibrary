@@ -1,7 +1,6 @@
 import { GameSequenceBase } from "./GameSequence";
 import { Board } from "@src/board/Board";
-import { Hand } from "@src/hand/Hand";
-import { IThinkable } from "@src/player/Thinkable";
+import { Player } from "@src/player/Player";
 import { PointsRuleValue, requiredRuleKeys } from "@src/rule/RequiredRules";
 
 /**
@@ -27,8 +26,7 @@ export enum ENextRoundReason {
  * ゲームクラス
  */
 export class Game extends EventTarget {
-  private players: IThinkable[] = [];
-  private playerHands: Hand[] = [];
+  private players: Player[] = [];
   private board: Board = new Board();
 
   /**
