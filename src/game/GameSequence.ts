@@ -1,8 +1,6 @@
-import { RuleBase } from "@src/rule/RuleBase";
+import { RuleBase, RuleContext } from "@src/rule/RuleBase";
 import { Tile } from "@src/tile/Tile";
 import { Game } from "./Game";
-import { RuleSetContext } from "@src/rule/RuleSet";
-import { IYaku } from "@src/winning_hand/Yaku";
 import { IRuleKeyValue } from "@src/rule/RuleKeyValue";
 import { InitialPointsRule, PlayerCountRule, WanpaiCountRule } from "@src/rule/RequiredRules";
 
@@ -21,15 +19,10 @@ export abstract class GameSequenceBase {
   }
 
   /**
-   * ルールセットコンテキスト取得
+   * ルールコンテキスト取得
    * @returns ルールセットコンテキスト
    */
-  makeRuleSetContext(): RuleSetContext { return this.ruleBase.getRuleSetContext(); }
-
-  /**
-   * 採用役リスト
-   */
-  get yakuList(): IYaku[] { return this.ruleBase.yakuList; }
+  makeRuleContext(): RuleContext { return this.ruleBase.makeContext(); }
 
   /**
    * 牌山生成
@@ -45,7 +38,7 @@ export abstract class GameSequenceBase {
    * 必須ルール追加
    */
   private appendRequiredRules<T>(rule: IRuleKeyValue<any>): void {
-    if (this.makeRuleSetContext().getRuleValue(rule.key) === undefined) {
+    if (this.makeRuleContext().ruleSetContext.getRuleValue(rule.key) === undefined) {
       this.ruleBase.addRule(rule);
     }
   }

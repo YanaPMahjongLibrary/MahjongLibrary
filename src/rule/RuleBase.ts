@@ -23,15 +23,32 @@ export abstract class RuleBase {
   }
 
   /**
-   * ルールセットコンテキスト取得
-   * @returns ルールセットコンテキスト
+   * ルールコンテキスト生成
+   * @returns ルールコンテキスト
    */
-  getRuleSetContext(): RuleSetContext {
-    return this.ruleSet.makeContext();
+  makeContext(): RuleContext {
+    return new RuleContext(this.ruleSet.makeContext(), this._yakuList);
   }
+}
+
+/**
+ * ルールコンテキスト
+ */
+export class RuleContext {
+  /**
+   * コンストラクタ
+   * @param _ruleSetContext ルールセットコンテキスト
+   * @param _yakuList 役リスト
+   */
+  constructor(private _ruleSetContext: RuleSetContext, private _yakuList: IYaku[]) {}
 
   /**
-   * 採用役リスト
+   * ルールセットコンテキスト
+   */
+  get ruleSetContext(): RuleSetContext { return this._ruleSetContext; }
+
+  /**
+   * 役リスト
    */
   get yakuList(): IYaku[] { return this._yakuList.concat(); }
 }

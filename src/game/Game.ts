@@ -38,8 +38,8 @@ export class Game extends EventTarget {
   constructor(private sequence: GameSequenceBase) {
     super();
     this.sequence.onBindGame(this);
-    const rules = this.sequence.makeRuleSetContext();
-    this.playerCount = rules.getRuleValue<number>(requiredRuleKeys.playerCount)!;
+    const rules = this.sequence.makeRuleContext();
+    this.playerCount = rules.ruleSetContext.getRuleValue<number>(requiredRuleKeys.playerCount)!;
   }
 
   /**
@@ -69,7 +69,7 @@ export class Game extends EventTarget {
    * ゲーム開始
    */
   start(): void {
-    const rules = this.sequence.makeRuleSetContext();
+    const rules = this.sequence.makeRuleContext().ruleSetContext;
     const wanpaiCount = rules.getRuleValue<number>(requiredRuleKeys.wanpaiCount)!;
     const points = rules.getRuleValue<PointsRuleValue>(requiredRuleKeys.points)!;
     this.board.initialize(wanpaiCount, this.playerCount, points.initial);
