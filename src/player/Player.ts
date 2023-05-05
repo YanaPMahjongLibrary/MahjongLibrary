@@ -1,6 +1,6 @@
 import { Hand } from "@src/hand/Hand";
 import { IThinkable } from "./Thinkable";
-import { StartGameNotice, StartRoundNotice } from "@src/notice/Notices";
+import { StartGameNotice, StartRoundNotice, TurnNotice } from "@src/notice/Notices";
 import { Tile } from "@src/tile/Tile";
 
 /**
@@ -35,5 +35,21 @@ export class Player {
    * @param notice 通知
    */
   onStartRound(notice: StartRoundNotice): void {
+  }
+
+  /**
+   * 切り番
+   * TODO: 行動レスポンスクラスの実装
+   * @param notice イベント
+   * @returns 行動レスポンスを返すPromise
+   */
+  onTurn(notice: TurnNotice): Promise<void> {
+    return new Promise(resolve => {
+      this.think.onTurn(this.hand.tiles, notice)
+          .then(response => {
+            // TODO: 不正な行動をしようとした際の補正処理実装
+            // TODO: レスポンスをGameに返す
+          });
+    });
   }
 }
