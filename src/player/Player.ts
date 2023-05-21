@@ -1,7 +1,8 @@
 import { Hand } from "@src/hand/Hand";
 import { IThinkable } from "./Thinkable";
-import { StartGameNotice, StartRoundNotice, TurnNotice } from "@src/notice/Notices";
+import { StartGameNotice, StartRoundNotice } from "@src/notice/Notices";
 import { Tile } from "@src/tile/Tile";
+import { TurnResponse } from "@src/notice/Response";
 
 /**
  * プレイヤークラス
@@ -39,16 +40,15 @@ export class Player {
 
   /**
    * 切り番
-   * TODO: 行動レスポンスクラスの実装
-   * @param notice イベント
+   * @param tail 自摸った牌。鳴いた後などでない場合はnull
    * @returns 行動レスポンスを返すPromise
    */
-  onTurn(notice: TurnNotice): Promise<void> {
+  onTurn(tile: Tile | null): Promise<TurnResponse> {
     return new Promise(resolve => {
-      this.think.onTurn(this.hand.tiles, notice)
+      this.think.onTurn(this.hand.tiles, tile)
           .then(response => {
             // TODO: 不正な行動をしようとした際の補正処理実装
-            // TODO: レスポンスをGameに返す
+            resolve(response);
           });
     });
   }

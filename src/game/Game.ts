@@ -32,6 +32,7 @@ export class Game extends EventTarget {
   private players: Player[] = [];
   private playerCount: number;
   private board: Board = new Board();
+  private currentTurn: number = 0;
 
   /**
    * コンストラクタ
@@ -132,8 +133,19 @@ export class Game extends EventTarget {
 
     // 通知
     this.dispatchEvent(new StartRoundNotice(this.sequence.makeRuleContext()));
+    
+    this.currentTurn = 0;
+    this.nextTurn();
+  }
 
-    // TODO: 親の切り番から開始
+  /**
+   * 次の切り番
+   */
+  private async nextTurn(): Promise<void> {
+    const tile = this.board.pick();
+    await this.players[this.currentTurn].onTurn(tile);
+    this.currentTurn++;
+    this.nextTurn();
   }
 
   /**
